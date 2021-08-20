@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "dev": "nodemon --watch serverless.yml --exec \"serverless offline --httpPort 3001\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "prisma": "^2.29.1",
+    "serverless-offline": "^8.0.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^2.29.1",
+    "@types/axios": "^0.14.0",
+    "axios": "^0.21.1",
+    "dompurify": "^2.3.1",
+    "jsdom": "^17.0.0",
+    "yup": "^0.32.9"
+  }
+}
