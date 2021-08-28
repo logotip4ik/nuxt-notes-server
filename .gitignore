@@ -1,5 +1,6 @@
 node_modules
 .env
+.serverless
 prisma/migrations
 package-lock.json
 TODO.md

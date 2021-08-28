@@ -10,11 +10,11 @@
 #    docs.serverless.com
 #
 # Happy Coding!
-
+org: logotype
+app: note-takin-app
 service: server
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
-#org: your-org-name
 
 useDotenv: true
 # You can pin your service to only deploy with a specific Serverless version
@@ -73,30 +73,120 @@ functions:
       - http:
           path: /note
           method: get
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - '*'
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - Name
+              - Email
+              - Picture
+              - Connection
+              - Origin
+              - Refer
+    environment:
+      DATABASE_URL: ${env:DATABASE_URL}
   createNote:
     handler: handler.createNote
     events:
       - http:
           path: /note
           method: post
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - '*'
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - Name
+              - Email
+              - Picture
+              - Connection
+              - Origin
+              - Refer
+    environment:
+      DATABASE_URL: ${env:DATABASE_URL}
   oneNote:
     handler: handler.getOneNote
     events:
       - http:
           path: /note/{id}
           method: get
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - '*'
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - Name
+              - Email
+              - Picture
+              - Connection
+              - Origin
+              - Refer
+    environment:
+      DATABASE_URL: ${env:DATABASE_URL}
   updateNote:
     handler: handler.updateNote
     events:
       - http:
           path: /note/{id}
           method: post
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - '*'
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - Name
+              - Email
+              - Picture
+              - Connection
+              - Origin
+              - Refer
+    environment:
+      DATABASE_URL: ${env:DATABASE_URL}
   deleteNote:
     handler: handler.deleteNote
     events:
       - http:
           path: /note/{id}
           method: delete
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - '*'
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - Name
+              - Email
+              - Picture
+              - Connection
+              - Origin
+              - Refer
+    environment:
+      DATABASE_URL: ${env:DATABASE_URL}
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

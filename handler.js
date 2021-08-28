@@ -86,6 +86,10 @@ module.exports.getAllNotes = async (event) => {
   } catch (error) {
     return {
       statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
     }
   }
 
@@ -95,6 +99,10 @@ module.exports.getAllNotes = async (event) => {
 
   return {
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
     body: JSON.stringify({ data: notes }),
   }
 }
@@ -102,7 +110,13 @@ module.exports.getAllNotes = async (event) => {
 module.exports.getOneNote = async (event) => {
   if (!event.headers.Authorization) return { statusCode: 401 }
   if (!event.pathParameters.id || isNaN(event.pathParameters.id))
-    return { statusCode: 400 }
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+    }
 
   const id = parseInt(event.pathParameters.id)
 
@@ -113,6 +127,10 @@ module.exports.getOneNote = async (event) => {
   } catch (error) {
     return {
       statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
     }
   }
 
@@ -124,10 +142,21 @@ module.exports.getOneNote = async (event) => {
 
   if (!note) return { statusCode: 200, body: JSON.stringify({ data: note }) }
   if (note.owner.email !== user.email)
-    return { statusCode: 200, body: JSON.stringify({ data: null }) }
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify({ data: null }),
+    }
 
   return {
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
     body: JSON.stringify({ data: note }),
   }
 }
@@ -142,6 +171,10 @@ module.exports.createNote = async (event) => {
   } catch (error) {
     return {
       statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
     }
   }
 
@@ -150,7 +183,13 @@ module.exports.createNote = async (event) => {
   try {
     validNote = noteCreateSchema.validateSync(event.body)
   } catch (error) {
-    return { statusCode: 400 }
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+    }
   }
 
   const secureNote = purify(validNote)
@@ -171,13 +210,26 @@ module.exports.createNote = async (event) => {
     },
   })
 
-  return { statusCode: 200, body: JSON.stringify({ data: createdNote }) }
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
+    body: JSON.stringify({ data: createdNote }),
+  }
 }
 
 module.exports.updateNote = async (event) => {
   if (!event.body) return { statusCode: 400 }
   if (!event.pathParameters.id || isNaN(event.pathParameters.id))
-    return { statusCode: 400 }
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+    }
 
   const id = parseInt(event.pathParameters.id)
   let user
@@ -187,7 +239,11 @@ module.exports.updateNote = async (event) => {
   } catch (error) {
     return {
       statusCode: error.res.statusCode,
-      body: JSON.stringify({ msg: error.res.statusMessage }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify({ msg: error.message }),
     }
   }
 
@@ -196,7 +252,13 @@ module.exports.updateNote = async (event) => {
   try {
     validNote = noteUpdateSchema.validateSync(event.body)
   } catch (error) {
-    return { statusCode: 400 }
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+    }
   }
 
   const secureNote = purify(validNote)
@@ -215,12 +277,25 @@ module.exports.updateNote = async (event) => {
     data: { ...secureNote },
   })
 
-  return { statusCode: 200, body: JSON.stringify({ data: updatedNote }) }
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
+    body: JSON.stringify({ data: updatedNote }),
+  }
 }
 
 module.exports.deleteNote = async (event) => {
   if (!event.pathParameters.id || isNaN(event.pathParameters.id))
-    return { statusCode: 400 }
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+    }
 
   const id = parseInt(event.pathParameters.id)
   let user
@@ -230,7 +305,11 @@ module.exports.deleteNote = async (event) => {
   } catch (error) {
     return {
       statusCode: error.res.statusCode,
-      body: JSON.stringify({ msg: error.res.statusMessage }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify({ msg: error.message }),
     }
   }
 
@@ -247,5 +326,12 @@ module.exports.deleteNote = async (event) => {
     where: { id },
   })
 
-  return { statusCode: 200, body: JSON.stringify({ data: deletedNote }) }
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
+    body: JSON.stringify({ data: deletedNote }),
+  }
 }
