@@ -1,17 +1,14 @@
-const http = require('http')
-
-const Gun = require('gun')
+const port = process.argv[2] || 8765
 const express = require('express')
 const helmet = require('helmet')
 const expressSession = require('express-session')
+const Gun = require('gun')
+require('gun/sea')
+require('gun/axe')
+
 const app = express()
 
-// your express configuration here
-
-const httpServer = http.createServer(app)
-
-// For http
-httpServer.listen(8080)
+app.use(Gun.serve)
 
 app.disable('x-powered-by')
 app.use(helmet())
@@ -25,8 +22,11 @@ app.use(
   })
 )
 
-app.get('/', (req, res) => {
-  res.json({ msg: 'GO HOME.' })
-})
+const server = app.listen(port)
+// (latter) add Amazon S3 support
+Gun({ file: 'data', web: server })
 
-Gun({ web: httpServer })
+// global.Gun = Gun /// make global to `node --inspect` - debug only
+// global.gun = gun /// make global to `node --inspect` - debug only
+
+console.log('Server started on port ' + port + ' with /gun')
