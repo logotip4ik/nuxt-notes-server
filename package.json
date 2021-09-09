@@ -9,12 +9,14 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "@ibm-cloud/cloudant": "^0.0.18",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "gun": "^0.2020.1234",
     "helmet": "^4.6.0"
   },
   "devDependencies": {
+    "dotenv": "^10.0.0",
     "nodemon": "^2.0.12"
   }
 }
