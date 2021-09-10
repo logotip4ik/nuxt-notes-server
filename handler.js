@@ -58,17 +58,18 @@ const getUser = (event) =>
             'https://bogdankostyuk.eu.auth0.com/',
           ],
         })
-        if (
-          !event.headers.Email ||
-          !event.headers.Name ||
-          !event.headers.Picture
-        )
+
+        const name = event.headers.Name || event.headers.name || null
+        const email = event.headers.Email || event.headers.email || null
+        const picture = event.headers.Picture || event.headers.picture || null
+
+        if (!name || !email || !picture)
           return reject(new Error('not enough data was not provided'))
 
         return resolve({
-          email: event.headers.Email,
-          name: event.headers.Name,
-          picture: event.headers.Picture,
+          email,
+          name,
+          picture,
         })
       } catch (error) {
         reject(new Error(error.message))
@@ -84,6 +85,7 @@ module.exports.getAllNotes = async (event) => {
   try {
     user = await getUser(event)
   } catch (error) {
+    console.log(error)
     return {
       statusCode: 400,
       headers: {
