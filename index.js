@@ -1,4 +1,4 @@
-require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 const port = process.argv[2] || process.env.PORT || 8765
 const crypto = require('crypto')
 const { CloudantV1 } = require('@ibm-cloud/cloudant')
